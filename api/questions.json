@@ -1,0 +1,115 @@
+{
+  "project_name": "Record Pixel - Life Playlist Test",
+  "questions": [
+    {
+      "id": 1,
+      "phase": "어린 시절",
+      "question": "기억의 맨 처음, 어릴 적 당신이 가장 좋아했던 시간대는 언제인가요?",
+      "options": [
+        {"text": "A. 햇살이 가득 들어오던 나른한 주말 오후", "trait": "Acoustic / Warm"},
+        {"text": "B. 모두가 잠든 후, 나만 깨어있던 고요한 새벽", "trait": "Ambient / Calm"},
+        {"text": "C. 친구들과 뛰어놀다 집으로 돌아가던 붉은 노을 질 무렵", "trait": "Indie / Nostalgic"},
+        {"text": "D. 비가 추적추적 내리며 빗소리만 들리던 흐린 날", "trait": "Jazz / Melancholic"}
+      ]
+    },
+    {
+      "id": 2,
+      "phase": "어린 시절",
+      "question": "혼자 방에 남겨졌을 때, 당신의 시선이 가장 오래 머문 곳은 어디였나요?",
+      "options": [
+        {"text": "A. 좋아하는 장난감과 책이 쌓여있던 나만의 비밀 기지", "trait": "Pop / Playful"},
+        {"text": "B. 바깥세상이 궁금해 하염없이 바라보던 창밖", "trait": "City Pop / Dreamy"},
+        {"text": "C. 빈 종이 위를 채워가던 색연필과 스케치북", "trait": "Lo-fi / Creative"},
+        {"text": "D. 부모님이 틀어두신 라디오나 오래된 카세트테이프", "trait": "Retro / Classic"}
+      ]
+    },
+    {
+      "id": 3,
+      "phase": "청소년기",
+      "question": "학창 시절, 이어폰을 꽂고 등하교를 할 때 당신의 발걸음은 어땠나요?",
+      "options": [
+        {"text": "A. 세상과 단절된 채, 생각에 잠겨 걷는 무거운 발걸음", "trait": "Rock / Alternative"},
+        {"text": "B. 박자에 맞춰 걷다 보면 어느새 목적지에 도착하는 경쾌함", "trait": "Dance / Upbeat"},
+        {"text": "C. 주변 풍경을 영화 속 한 장면처럼 느끼며 걷는 여유로움", "trait": "OST / Cinematic"},
+        {"text": "D. 친구들과 떠들며 걷느라 노래는 배경음악일 뿐이었던 소란함", "trait": "Punk / Energetic"}
+      ]
+    },
+    {
+      "id": 4,
+      "phase": "청소년기",
+      "question": "그 시절, 당신의 마음속을 가장 복잡하게 만들었던 고민의 형태는?",
+      "options": [
+        {"text": "A. '나는 누구일까?'라는 나 자신에 대한 끝없는 질문", "trait": "Indie Rock / Deep"},
+        {"text": "B. '앞으로 뭘 해야 하지?'라는 불투명한 미래에 대한 막막함", "trait": "Electronic / Synth"},
+        {"text": "C. 친구, 가족 등 사람과의 관계에서 오는 크고 작은 상처", "trait": "R&B / Soul"},
+        {"text": "D. 답답한 일상에서 벗어나 어딘가로 훌쩍 떠나고 싶은 갈증", "trait": "Folk / Free"}
+      ]
+    },
+    {
+      "id": 5,
+      "phase": "전환점",
+      "question": "인생에서 예상치 못한 큰 소나기를 만났을 때, 당신의 대처법은?",
+      "options": [
+        {"text": "A. 비를 흠뻑 맞으며 오히려 이 상황을 온몸으로 겪어낸다", "trait": "Rock / Intense"},
+        {"text": "B. 안전한 처마 밑으로 들어가 비가 그칠 때까지 조용히 기다린다", "trait": "Acoustic / Safe"},
+        {"text": "C. 어떻게든 우산을 구하거나 비를 피할 방법을 빠르게 찾아낸다", "trait": "Pop / Active"},
+        {"text": "D. 비 내리는 풍경을 감상하며 잠시 쉬어가는 타이밍으로 삼는다", "trait": "Jazz / Chill"}
+      ]
+    },
+    {
+      "id": 6,
+      "phase": "전환점",
+      "question": "가장 힘들었던 시기, 당신을 다시 일으켜 세워준 한 마디는 무엇에 가까웠나요?",
+      "options": [
+        {"text": "A. \"괜찮아, 다 지나갈 거야.\" (묵묵한 위로)", "trait": "Ballad / Comforting"},
+        {"text": "B. \"너는 생각보다 훨씬 강해.\" (스스로에 대한 믿음)", "trait": "Hip-hop / Confident"},
+        {"text": "C. \"지금 당장 떠나자!\" (환기되는 새로운 자극)", "trait": "EDM / Refreshing"},
+        {"text": "D. 아무 말 없이 곁을 지켜주던 누군가의 온기", "trait": "Lo-fi / Warm"}
+      ]
+    },
+    {
+      "id": 7,
+      "phase": "현재",
+      "question": "요즘 금요일 밤, 당신이 가장 선호하는 시간의 조각은 어떤 모습인가요?",
+      "options": [
+        {"text": "A. 시원한 맥주 한 캔과 함께 밀린 넷플릭스를 보는 방구석", "trait": "City Pop / Relaxed"},
+        {"text": "B. 시끌벅적한 곳에서 사람들과 에너지를 나누는 술자리", "trait": "Dance / Social"},
+        {"text": "C. 좋은 스피커가 있는 조용한 바에서 홀로 즐기는 위스키 한 잔", "trait": "Jazz / Elegant"},
+        {"text": "D. 목적지 없이 밤공기를 마시며 드라이브나 산책을 하는 시간", "trait": "Synthwave / Night"}
+      ]
+    },
+    {
+      "id": 8,
+      "phase": "현재",
+      "question": "지금의 나를 하나의 색깔로 표현한다면 어떤 톤에 가까울까요?",
+      "options": [
+        {"text": "A. 튀지 않지만 어디에나 잘 스며드는 차분한 무채색", "trait": "Minimal / Clean"},
+        {"text": "B. 깊이를 알 수 없는 짙고 매력적인 네이비 혹은 버건디", "trait": "Soul / Deep"},
+        {"text": "C. 어디서든 눈에 띄고 생동감 넘치는 비비드한 원색", "trait": "Pop / Bright"},
+        {"text": "D. 경계가 모호하고 부드럽게 섞이는 파스텔톤", "trait": "Dream Pop / Soft"}
+      ]
+    },
+    {
+      "id": 9,
+      "phase": "미래",
+      "question": "10년 뒤의 나를 상상했을 때, 나를 둘러싼 배경음악은 어떤 템포일까요?",
+      "options": [
+        {"text": "A. 지금보다 훨씬 빠르고 역동적인 비트", "trait": "Upbeat / Energetic"},
+        {"text": "B. 흔들림 없이 여유롭고 안정적인 미드 템포", "trait": "Groove / Steady"},
+        {"text": "C. 모든 것을 내려놓은 듯 한없이 느리고 평화로운 선율", "trait": "Ambient / Slow"},
+        {"text": "D. 때론 빠르고 때론 느리게, 자유자재로 변하는 리듬", "trait": "Alternative / Dynamic"}
+      ]
+    },
+    {
+      "id": 10,
+      "phase": "미래",
+      "question": "내 인생이라는 앨범의 마지막 트랙이 끝난 후, 남겨진 사람들에게 어떤 감정을 남기고 싶나요?",
+      "options": [
+        {"text": "A. 입가에 옅은 미소가 지어지는 따뜻한 여운", "trait": "Acoustic / Warm Ending"},
+        {"text": "B. '정말 멋진 영화를 본 것 같아'라는 벅찬 감동", "trait": "Cinematic / Epic"},
+        {"text": "C. 슬프지만 아름다웠다는 짙은 그리움", "trait": "Ballad / Melancholic"},
+        {"text": "D. 금방이라도 다시 첫 번째 트랙을 틀고 싶어지는 경쾌함", "trait": "Pop / Unforgettable"}
+      ]
+    }
+  ]
+}

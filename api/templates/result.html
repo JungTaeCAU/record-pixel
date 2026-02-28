@@ -1,0 +1,71 @@
+<div class="fade-in text-center">
+    <div class="absolute top-0 left-0 w-full bg-[#ff5a5f] text-white text-xs font-bold py-1.5 tracking-widest uppercase border-b-2 border-black">
+        Your Record Pixel
+    </div>
+
+    <h2 class="font-bold text-gray-500 mb-1 mt-1 leading-tight">{{ user_name }}님의 인생 트랙은</h2>
+    <h1 class="text-2xl font-extrabold text-gray-900 mb-6 leading-snug break-keep">{{ persona }}</h1>
+    
+    <div class="bg-gray-50/70 border-2 border-black p-5 rounded-xl text-left mb-6 backdrop-blur-sm">
+        <p class="text-gray-700 font-medium leading-relaxed text-sm break-keep">
+            {{ message }}
+        </p>
+    </div>
+
+    <div class="bg-white border-2 border-black rounded-xl p-5 mb-8 text-left shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+        <h3 class="font-extrabold text-gray-900 mb-4 border-b-2 border-dashed border-gray-300 pb-2 text-sm uppercase tracking-wider">
+            Recommended Tracks
+        </h3>
+        <ul class="flex flex-col gap-3">
+            {% for track in playlist %}
+            <li class="flex items-center gap-3">
+                <div class="font-bold text-gray-400 text-sm">0{{ loop.index }}</div>
+                <div class="flex-1 overflow-hidden">
+                    <p class="font-bold text-gray-800 text-sm truncate">{{ track.title }}</p>
+                    <p class="font-medium text-gray-500 text-xs truncate">{{ track.artist }}</p>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="flex flex-col gap-3">
+        <button 
+            onclick="shareResult()" 
+            class="btn-game w-full bg-[#ff5a5f] hover:bg-[#ff4248] text-white font-bold py-4 rounded-xl text-lg border-2 border-black flex items-center justify-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+            </svg>
+            테스트 공유하기
+        </button>
+        
+        <button 
+            onclick="window.location.href='/'" 
+            class="btn-game w-full bg-white text-gray-900 font-bold py-4 rounded-xl text-lg border-2 border-black hover:bg-gray-50 backdrop-blur-sm">
+            처음으로 돌아가기
+        </button>
+    </div>
+</div>
+
+<script>
+function shareResult() {
+    const shareData = {
+        title: 'Record Pixel - Life Playlist',
+        text: '나만의 인생 트랙을 확인해보세요! 당신의 기억 속 주파수는 무엇인가요?',
+        url: window.location.origin // 현재 사이트의 주소를 자동으로 가져옵니다.
+    };
+
+    // 모바일 기기 (네이티브 공유 창 지원 환경)
+    if (navigator.share) {
+        navigator.share(shareData)
+            .then(() => console.log('공유 성공'))
+            .catch((error) => console.log('공유 취소됨', error));
+    } 
+    // PC 등 네이티브 공유 미지원 환경 (클립보드에 링크 복사)
+    else {
+        navigator.clipboard.writeText(shareData.url).then(() => {
+            alert('테스트 링크가 클립보드에 복사되었습니다! 친구들에게 공유해보세요. 💿');
+        });
+    }
+}
+</script>
