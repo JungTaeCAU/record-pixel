@@ -25,20 +25,17 @@
     </style>
 </head>
 
-<body class="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden gap-6">
+<body class="min-h-[100dvh] flex flex-col items-center justify-center px-4 py-8 relative overflow-x-hidden gap-6">
 
-    <!-- 배경 영상 -->
     <div class="fixed inset-0 z-[-2]">
         <video autoplay loop muted playsinline class="w-full h-full object-cover">
-            <source src="/static/background.mp4" type="video/mp4">
+            <source src="https://raw.githubusercontent.com/JungTaeCAU/record-pixel/refs/heads/main/public/static/background.mp4" type="video/mp4">
         </video>
     </div>
 
-    <!-- 배경 오버레이 -->
     <div class="fixed inset-0 z-[-1] bg-white/40 backdrop-blur-sm"></div>
 
-    <!-- 회전 이미지 + 로고: 카드 위 중앙 -->
-    <div class="z-10 flex flex-col items-center gap-3">
+    <div class="z-10 flex flex-col items-center gap-3 mt-auto sm:mt-0">
         <style>
             @keyframes spin-cw {
                 from { transform: rotate(0deg); }
@@ -48,28 +45,28 @@
                 animation: spin-cw 4s linear infinite;
             }
         </style>
-        <img src="/static/record.png" alt="Record"
+        <img src="https://raw.githubusercontent.com/JungTaeCAU/record-pixel/refs/heads/main/public/static/record.png" alt="Record"
              class="rotate-record rounded-full drop-shadow-lg"
-             style="height: clamp(2rem, 15vw, 3rem); width: clamp(2rem, 15vw, 3rem); object-fit: cover;">
-        <img src="/static/logo.png" alt="Record Pixel Logo"
+             style="height: clamp(3rem, 15vw, 4rem); width: clamp(3rem, 15vw, 4rem); object-fit: cover;">
+        <img src="https://raw.githubusercontent.com/JungTaeCAU/record-pixel/refs/heads/main/public/static/logo.png" alt="Record Pixel Logo"
              class="w-auto drop-shadow-md"
-             style="height: clamp(5rem, 15vw, 6rem);">
+             style="height: clamp(4rem, 12vw, 6rem);">
     </div>
-    <!-- 퀴즈 카드 -->
-    <div id="quiz-container" class="game-card bg-white rounded-2xl p-8 max-w-md w-full text-center relative overflow-hidden z-10">
+    
+    <div id="quiz-container" class="game-card bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full text-center relative overflow-hidden z-10 mb-auto sm:mb-0">
         
         <div class="absolute top-0 left-0 w-full bg-black text-white text-xs font-bold py-1 tracking-widest uppercase">
             Record Pixel Project
         </div>
 
-        <h2 class="text-2xl font-extrabold text-gray-900 mt-6 mb-2">당신의 기억 속<br>주파수를 맞춰볼까요?</h2>
-        <p class="text-gray-500 mb-8 font-medium">나만의 인생 트랙리스트 찾기</p>
+        <h2 class="text-xl sm:text-2xl font-extrabold text-gray-900 mt-6 mb-2">당신의 기억 속<br>주파수를 맞춰볼까요?</h2>
+        <p class="text-sm sm:text-base text-gray-500 mb-6 sm:mb-8 font-medium">나만의 인생 트랙리스트 찾기</p>
         
         <button 
             hx-post="/question/1" 
             hx-target="#quiz-container" 
             hx-swap="innerHTML"
-            class="btn-game w-full bg-[#ff5a5f] hover:bg-[#ff4248] text-white font-bold py-4 rounded-xl text-lg border-2 border-black">
+            class="btn-game w-full bg-[#ff5a5f] hover:bg-[#ff4248] text-white font-bold py-3 sm:py-4 rounded-xl text-base sm:text-lg border-2 border-black">
             테스트 시작하기
         </button>
     </div>

@@ -1,27 +1,28 @@
 import csv
 from datetime import datetime
 import os
-from fastapi import FastAPI, Request, Form
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
-from collections import Counter
-from sqlmodel import Field, Session, SQLModel, create_engine, select
 import json
+from collections import Counter
+
+from fastapi import FastAPI, Request, Form
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from dotenv import load_dotenv
+from sqlmodel import Field, Session, SQLModel, create_engine, select
+
+# 환경 변수 로드 (로컬 테스트용)
+load_dotenv()
 
 app = FastAPI()
-templates = Jinja2Templates(directory="templates")
-# 💡 현재 파일(api/main.py) 위치 기준
-CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# 1. Templates는 api/ 내부에 있으므로 상대 경로로 잡음
+# 경로 설정 (Vercel 배포 환경 대응)
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 templates = Jinja2Templates(directory=os.path.join(CURRENT_DIR, "templates"))
 
-# 2. questions.json 로드
+# questions.json 로드
 json_path = os.path.join(CURRENT_DIR, "questions.json")
 with open(json_path, "r", encoding="utf-8") as f:
     questions = json.load(f)["questions"]
-
 
 # 1. 데이터베이스 모델 정의
 class UserResult(SQLModel, table=True):
@@ -32,55 +33,61 @@ class UserResult(SQLModel, table=True):
     traits: str
     created_at: datetime = Field(default_factory=datetime.now)
 
-# 2. 엔진 설정 (Vercel에서 제공하는 환경 변수 사용)
+# 2. 엔진 설정
 postgres_url = os.getenv("POSTGRES_URL")
 
 if postgres_url:
-    # 1. postgres:// -> postgresql:// 변경
+    # postgres:// -> postgresql:// 변경 (SQLAlchemy 호환성)
     if postgres_url.startswith("postgres://"):
         postgres_url = postgres_url.replace("postgres://", "postgresql://", 1)
     
-    # 2. psycopg2가 인식 못 하는 'supa' 파라미터 강제 제거
+    # 파라미터 정제
     if "&supa=" in postgres_url:
-        # &supa= 로 시작하는 부분부터 끝까지 잘라냅니다.
         postgres_url = postgres_url.split("&supa=")[0]
     elif "?supa=" in postgres_url:
-        # 만약 ?supa= 로 시작한다면 그 뒤를 날립니다.
         postgres_url = postgres_url.split("?supa=")[0]
-engine = create_engine(postgres_url)
 
-# 3. DB 테이블 생성 (앱 시작 시 실행)
+# DB 엔진 생성
+engine = create_engine(postgres_url) if postgres_url else None
+
 def create_db_and_tables():
-    SQLModel.metadata.create_all(engine)
+    if engine:
+        SQLModel.metadata.create_all(engine)
 
 @app.on_event("startup")
 def on_startup():
     create_db_and_tables()
 
+# --- Routes ---
+
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    # 수정: request=request를 별도 인자로 전달
+    return templates.TemplateResponse(request=request, name="index.html")
 
-# GET 대신 POST로 변경하여 데이터를 누적해서 받습니다.
 @app.post("/question/{q_id}", response_class=HTMLResponse)
 async def get_question(
     request: Request, 
     q_id: int, 
-    accumulated_traits: str = Form(default="") # 이전까지 선택한 성향들을 쉼표로 이어서 받음
+    accumulated_traits: str = Form(default="")
 ):
-    # 10번 질문까지 다 끝났다면, 연락처 입력 폼(contact.html) 반환
     if q_id > 10:
         return templates.TemplateResponse(
-            "contact.html", 
-            {"request": request, "accumulated_traits": accumulated_traits}
+            request=request, 
+            name="contact.html", 
+            context={"accumulated_traits": accumulated_traits}
         )
     
     question = next((q for q in questions if q["id"] == q_id), None)
     return templates.TemplateResponse(
-        "question.html", 
-        {"request": request, "question": question, "next_id": q_id + 1, "accumulated_traits": accumulated_traits}
+        request=request, 
+        name="question.html", 
+        context={
+            "question": question, 
+            "next_id": q_id + 1, 
+            "accumulated_traits": accumulated_traits
+        }
     )
-
 
 @app.post("/result", response_class=HTMLResponse)
 async def calculate_result(
@@ -145,33 +152,42 @@ async def calculate_result(
             {"artist": "Don Toliver", "title": "Lose My Mind (F1 OST)"},
             {"artist": "HUNTR/X", "title": "Golden"}
         ]
-
+        
     # DB 저장
-    new_user = UserResult(
-        user_name=user_name, 
-        phone_number=phone_number, 
-        persona=persona, 
-        traits=accumulated_traits
-    )
-    with Session(engine) as session:
-        session.add(new_user)
-        session.commit()
+    if engine:
+        new_user = UserResult(
+            user_name=user_name, 
+            phone_number=phone_number, 
+            persona=persona, 
+            traits=accumulated_traits
+        )
+        with Session(engine) as session:
+            session.add(new_user)
+            session.commit()
+
     return templates.TemplateResponse(
-        "result.html", 
-        {"request": request, "persona": persona, "message": message, "user_name": user_name, "phone_number": phone_number, "playlist": playlist}
+        request=request, 
+        name="result.html", 
+        context={
+            "persona": persona, 
+            "message": message, 
+            "user_name": user_name, 
+            "phone_number": phone_number, 
+            "playlist": playlist
+        }
     )
 
-
-# 💡 2. 관리자 페이지 라우터 생성
 @app.get("/admin", response_class=HTMLResponse)
 async def admin_page(request: Request):
-    users = []
-    # CSV 파일이 존재하면 읽어서 리스트에 담기
-    if os.path.isfile("users.csv"):
-        with open("users.csv", mode="r", encoding="utf-8-sig") as f:
-            reader = csv.DictReader(f)
-            users = list(reader)
-            # 가장 최근에 참여한 사람이 맨 위에 오도록 뒤집기
-            users.reverse()
-            
-    return templates.TemplateResponse("admin.html", {"request": request, "users": users})
+    if not engine:
+        return "Database not configured."
+        
+    with Session(engine) as session:
+        statement = select(UserResult).order_by(UserResult.id.desc())
+        users = session.exec(statement).all()
+
+    return templates.TemplateResponse(
+        request=request, 
+        name="admin.html", 
+        context={"users": users}
+    )

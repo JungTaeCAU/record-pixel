@@ -38,12 +38,17 @@
                     {% if users %}
                         {% for user in users %}
                         <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                            <td class="p-4 text-gray-500 whitespace-nowrap">{{ user['참여시간'] }}</td>
-                            <td class="p-4 font-bold text-gray-900">{{ user['이름'] }}</td>
-                            <td class="p-4 text-blue-600 font-medium">{{ user['전화번호'] }}</td>
+                            <td class="p-4 text-gray-500 whitespace-nowrap">
+                                {{ user.created_at.strftime('%Y-%m-%d %H:%M') if user.created_at else '' }}
+                            </td>
+                            
+                            <td class="p-4 font-bold text-gray-900">{{ user.user_name }}</td>
+                            
+                            <td class="p-4 text-blue-600 font-medium">{{ user.phone_number }}</td>
+                            
                             <td class="p-4">
                                 <span class="bg-gray-100 px-3 py-1 rounded-full text-gray-800 font-semibold border border-gray-300 text-xs">
-                                    {{ user['결과_페르소나'] }}
+                                    {{ user.persona }}
                                 </span>
                             </td>
                         </tr>
